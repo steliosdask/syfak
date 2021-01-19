@@ -1,19 +1,23 @@
 import pandas as pd
+import warnings
 
-df = pd.read_csv('C:\\Users\\user\\PycharmProjects\\SyfakProject\\stoch\\test1.csv', delimiter=';', encoding='iso8859_7' )
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+df = pd.read_csv('C:\\Users\StelD\\Documents\\GitHub\\syfak\\files\\PIST_HER.CSV', delimiter=';', encoding='iso8859_7' )
 
 df = df.loc[(df['ΠΕΡΙΓΡΑΦΗ']=='="ΜΕΛΟΣ"') | (df['ΠΕΡΙΓΡΑΦΗ']== '="ΜΗ ΜΕΛΟΣ-ΦΑΡΜΑΚΕΙΟ"')]
 
-df = df[['ΠΕΡΙΓΡΑΦΗ','ΚΩΔ. ΠΕΛΑΤΗ','ΕΠΩΝΥΜΙΑ','Φαρμακα Συντ/μενα ΤΖΙΡΟΣ','ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ','ΓΑΛΑΤΑ ΤΖΙΡΟΣ']].sort_values(['ΠΕΡΙΓΡΑΦΗ','ΕΠΩΝΥΜΙΑ'])
+df = df[['ΠΕΡΙΓΡΑΦΗ','ΚΩΔ. ΠΕΛΑΤΗ','ΕΠΩΝΥΜΙΑ','ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ','ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ','ΓΑΛΑΤΑ ΤΖΙΡΟΣ']].sort_values(['ΠΕΡΙΓΡΑΦΗ','ΕΠΩΝΥΜΙΑ'])
 
 df = df.drop(columns=['ΠΕΡΙΓΡΑΦΗ'])
 df = df.drop(df.index[0])
-df['Φαρμακα Συντ/μενα ΤΖΙΡΟΣ'] = df['Φαρμακα Συντ/μενα ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
+df['ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'] = df['ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
 df['ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'] = df['ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
 df['ΓΑΛΑΤΑ ΤΖΙΡΟΣ'] = df['ΓΑΛΑΤΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
-df['ΚΩΔ. ΠΕΛΑΤΗ']= df['ΚΩΔ. ΠΕΛΑΤΗ'].str.replace('[=,"]', '')
-df['ΕΠΩΝΥΜΙΑ']= df['ΕΠΩΝΥΜΙΑ'].str.replace('[=,"]', '')
+df['ΚΩΔ. ΠΕΛΑΤΗ'] = df['ΚΩΔ. ΠΕΛΑΤΗ'].str.replace('[=,"]', '')
+df['ΕΠΩΝΥΜΙΑ'] = df['ΕΠΩΝΥΜΙΑ'].str.replace('[=,"]', '')
 
 
 df['ΣΥΝΟΛΟ'] = df.iloc[:, 2:5].sum(axis=1)
-df.to_excel('test.xlsx', index=False)
+out_path = "C:\\Users\StelD\\Documents\\GitHub\\syfak\\files\\PIST_HER.xlsx"
+df.to_excel(out_path, 'test.xlsx', index=False)
