@@ -14,5 +14,5 @@ def csvtoexcel(cf):
 
 
     cf['ΣΥΝΟΛΟ'] = cf.iloc[:, 2:5].sum(axis=1)
-    out_path = "C:\\Users\StelD\\Documents\\GitHub\\syfak\\files\\PIST_HER.xlsx"
-    cf.to_excel(out_path, 'test.xlsx', index=False)
+    out_path = "C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\PIST_HER.xlsx"
+    cf.to_excel(out_path, index=False)
