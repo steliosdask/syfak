@@ -20,11 +20,6 @@ def csvtoexcel(cf):
 
 
 
-
-
-
-
-
     ''' cf['ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'] = cf['ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
         cf['ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'] = cf['ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
         cf['ΓΑΛΑΤΑ ΤΖΙΡΟΣ'] = cf['ΓΑΛΑΤΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
