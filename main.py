@@ -5,18 +5,19 @@ from utils import *
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\'
-files = glob.glob(path + "*.csv")
+path = r'C:\Users\StelD\Documents\GitHub\syfak\files'
+files = glob.glob(path + "\*.csv")
 
-print(files)
-li = []
+files_new = []
 
-for filename in files:
-    df = pd.read_csv(filename, delimiter=';', encoding='iso8859_7')
-    li.append(df)
-frame = pd.concat(li, axis=0, ignore_index=True)
-print(frame)
-#print(li)
+for file in files:
+    files_new.append(file.replace(path + "\\" ,''))
+    df = pd.read_csv(file, delimiter=';', encoding='iso8859_7')
+    csvtoexcel(df)
+
+
+
+
 #startfiles = ['PIST_HER','PIST_AIG','PIST_LAS','PIST_RHO','PIST_RET','PIST_HER2','PIST_AIG2','PIST_LAS2','PIST_RHO2','PIST_RET2']
 #finalfiles = ['ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΗΡΑΚΛΕΙΟ','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΑΙΓΑΙΟ','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΛΑΣΙΘΙ','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΡΟΔΟΣ','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΡΕΘΥΜΝΟ','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΗΡΑΚΛΕΙΟ 2','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΑΙΓΑΙΟ 2','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΛΑΣΙΘΙ 2','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΡΟΔΟΣ 2','ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ ΡΕΘΥΜΝΟ 2']
 
