@@ -12,8 +12,14 @@ files_new = []
 
 for file in files:
     files_new.append(file.replace(path + "\\" ,''))
-    df = pd.read_csv(file, delimiter=';', encoding='iso8859_7')
-    csvtoexcel(df)
+print("This is the list of csv files! proceed? \n",files_new)
+
+checkinput = input()
+
+if checkinput == 'Y' or checkinput == 'Yes' or checkinput == 'y' or checkinput == 'yes':
+    for file in files:
+        df = pd.read_csv(file, delimiter=';', encoding='iso8859_7')
+        xlsx_file = csvtoexcel(df)
 
 
 
