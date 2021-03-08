@@ -69,7 +69,7 @@ def finalExcelName(ci):
                 else:
                     print("WRONG FILE !2?")
 
-            out_path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\' + st1 + st2 + st3 + '.xlsx'
+            out_path = 'C:\\Users\\StelD\\Documents\\Excel files\\' + st1 + st2 + st3 + '.xlsx'
             xlsx_file.to_excel(out_path, index=False)
 
 
