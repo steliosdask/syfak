@@ -16,9 +16,8 @@ print("This is the list of csv files! proceed? \n",files_new)
 checkinput = input()
 
 if checkinput == 'Y' or checkinput == 'Yes' or checkinput == 'y' or checkinput == 'yes':
-    for file in files:
-        df = pd.read_csv(file, delimiter=';', encoding='iso8859_7')
-        print(df)
+    for file in files_new:
+        df = pd.read_csv(path + '\\'+ file, delimiter=';', encoding='iso8859_7')
         xlsx_file = csvtoexcel(df)
         print(xlsx_file)
         #out_path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\' + finalfiles[num] + '.xlsx'
