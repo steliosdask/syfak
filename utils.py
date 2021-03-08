@@ -1,12 +1,22 @@
 import glob
 import warnings
 import pandas as pd
+import tkinter as tk
+from tkinter import filedialog
+
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-path = r'C:\Users\StelD\Documents\GitHub\syfak\files'
+#USER CHOOSE FOLDER WITH CSV FILES
+root= tk.Tk()
+root.withdraw()
+path = filedialog.askdirectory()
 
 
+
+
+
+#CREATES LIST WITH FILES
 def listOfFiles():
     files = glob.glob(path + "\*.csv")
 
@@ -17,7 +27,7 @@ def listOfFiles():
 
 nameoffiles = listOfFiles()
 
-
+#GIVES APPROPRIATE NAME ON NEW FILES
 def finalExcelName(ci):
     if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
         for file in nameoffiles:
@@ -59,6 +69,7 @@ def finalExcelName(ci):
             xlsx_file.to_excel(out_path, index=False)
 
 
+#FORM OF THE NEW FILE
 def xlsform(cf):
     cf = cf.loc[(cf['ΠΕΡΙΓΡΑΦΗ'] == '="ΜΕΛΟΣ"') | (cf['ΠΕΡΙΓΡΑΦΗ'] == '="ΜΗ ΜΕΛΟΣ-ΦΑΡΜΑΚΕΙΟ"')]
 
@@ -77,3 +88,4 @@ def xlsform(cf):
     return cf
 
 
+#path = r'C:\Users\StelD\Documents\GitHub\syfak\files'
