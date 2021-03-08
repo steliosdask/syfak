@@ -7,7 +7,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 path = r'C:\Users\StelD\Documents\GitHub\syfak\files'
 
 
-def listoffiles():
+def listOfFiles():
     files = glob.glob(path + "\*.csv")
 
     files_new = []
@@ -15,7 +15,7 @@ def listoffiles():
         files_new.append(file.replace(path + "\\", ''))
     return files_new
 
-nameoffiles = listoffiles()
+nameoffiles = listOfFiles()
 
 
 def finalExcelName(ci):
@@ -77,11 +77,3 @@ def xlsform(cf):
     return cf
 
 
-
-
-    ''' cf['ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'] = cf['ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
-        cf['ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'] = cf['ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
-        cf['ΓΑΛΑΤΑ ΤΖΙΡΟΣ'] = cf['ΓΑΛΑΤΑ ΤΖΙΡΟΣ'].str.replace(',', '.').astype(float)
-         
-        cf['ΚΩΔ. ΠΕΛΑΤΗ'] = cf['ΚΩΔ. ΠΕΛΑΤΗ'].str.replace('[=,"]', '')
-        cf['ΕΠΩΝΥΜΙΑ'] = cf['ΕΠΩΝΥΜΙΑ'].str.replace('[=,"]', '')'''
