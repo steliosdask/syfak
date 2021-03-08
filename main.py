@@ -4,11 +4,11 @@ import warnings
 from utils import *
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
-path = r'C:\ Users\StelD\Documents\GitHub\syfak\ files'
+
+path = r'C:\Users\StelD\Documents\GitHub\syfak\files'
 files = glob.glob(path + "\*.csv")
 
 files_new = []
-final_files = []
 for file in files:
     files_new.append(file.replace(path + "\\" ,''))
 print("This is the list of csv files! proceed? \n",files_new)
@@ -18,6 +18,7 @@ checkinput = input()
 if checkinput == 'Y' or checkinput == 'Yes' or checkinput == 'y' or checkinput == 'yes':
     for file in files:
         df = pd.read_csv(file, delimiter=';', encoding='iso8859_7')
+        print(df)
         xlsx_file = csvtoexcel(df)
         print(xlsx_file)
         #out_path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\' + finalfiles[num] + '.xlsx'
