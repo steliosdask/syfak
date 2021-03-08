@@ -4,15 +4,14 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
-
 warnings.simplefilter(action='ignore', category=FutureWarning)
+
+
 
 #USER CHOOSE FOLDER WITH CSV FILES
 root= tk.Tk()
 root.withdraw()
 path = filedialog.askdirectory()
-
-
 
 
 
@@ -25,7 +24,12 @@ def listOfFiles():
         files_new.append(file.replace(path + "\\", ''))
     return files_new
 
+
+
 nameoffiles = listOfFiles()
+
+
+
 
 #GIVES APPROPRIATE NAME ON NEW FILES
 def finalExcelName(ci):
@@ -67,6 +71,9 @@ def finalExcelName(ci):
 
             out_path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\' + st1 + st2 + st3 + '.xlsx'
             xlsx_file.to_excel(out_path, index=False)
+
+
+
 
 
 #FORM OF THE NEW FILE
