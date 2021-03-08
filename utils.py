@@ -1,5 +1,65 @@
+import glob
+import warnings
+import pandas as pd
 
-def csvtoexcel(cf):
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+path = r'C:\Users\StelD\Documents\GitHub\syfak\files'
+
+
+def listoffiles():
+    files = glob.glob(path + "\*.csv")
+
+    files_new = []
+    for file in files:
+        files_new.append(file.replace(path + "\\", ''))
+    return files_new
+
+nameoffiles = listoffiles()
+
+
+def finalExcelName(ci):
+    if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
+        for file in nameoffiles:
+            df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
+            xlsx_file = xlsform(df)
+            namecheck = file.split('_')
+            st1 = "ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ "
+            st2 = ""
+            st3 = ""
+            if len(namecheck) < 3:
+                if namecheck[1] == 'AIG.CSV':
+                    st2 = "ΑΙΓΑΙΟ"
+                elif namecheck[1] == 'HER.CSV':
+                    st2 = "ΗΡΑΚΛΕΙΟ"
+                elif namecheck[1] == 'RHO.CSV':
+                    st2 = "ΡΟΔΟΣ"
+                elif namecheck[1] == 'RET.CSV':
+                    st2 = "ΡΕΘΥΜΝΟ"
+                elif namecheck[1] == 'LAS.CSV':
+                    st2 = "ΛΑΣΙΘΙ"
+                else:
+                    print("WRONG FILE !1?")
+            else:
+                st3 = " 2"
+                if namecheck[1] == 'AIG':
+                    st2 = "ΑΙΓΑΙΟ"
+                elif namecheck[1] == 'HER':
+                    st2 = "ΗΡΑΚΛΕΙΟ"
+                elif namecheck[1] == 'RHO':
+                    st2 = "ΡΟΔΟΣ"
+                elif namecheck[1] == 'RET':
+                    st2 = "ΡΕΘΥΜΝΟ"
+                elif namecheck[1] == 'LAS':
+                    st2 = "ΛΑΣΙΘΙ"
+                else:
+                    print("WRONG FILE !2?")
+
+            out_path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\' + st1 + st2 + st3 + '.xlsx'
+            xlsx_file.to_excel(out_path, index=False)
+
+
+def xlsform(cf):
     cf = cf.loc[(cf['ΠΕΡΙΓΡΑΦΗ'] == '="ΜΕΛΟΣ"') | (cf['ΠΕΡΙΓΡΑΦΗ'] == '="ΜΗ ΜΕΛΟΣ-ΦΑΡΜΑΚΕΙΟ"')]
 
     cf = cf[['ΠΕΡΙΓΡΑΦΗ', 'ΚΩΔ. ΠΕΛΑΤΗ', 'ΕΠΩΝΥΜΙΑ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ']].sort_values(['ΠΕΡΙΓΡΑΦΗ', 'ΕΠΩΝΥΜΙΑ'])
@@ -15,7 +75,6 @@ def csvtoexcel(cf):
 
     cf['ΣΥΝΟΛΟ'] = cf.iloc[:, 2:5].sum(axis=1)
     return cf
-
 
 
 
