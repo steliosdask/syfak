@@ -7,9 +7,8 @@ from tkinter import filedialog
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-
 #USER CHOOSE FOLDER WITH CSV FILES
-root= tk.Tk()
+root = tk.Tk()
 root.withdraw()
 path = filedialog.askdirectory()
 
@@ -29,48 +28,48 @@ def listOfFiles():
 nameoffiles = listOfFiles()
 
 
-
-
 #GIVES APPROPRIATE NAME ON NEW FILES
-def finalExcelName(ci):
-    if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
-        for file in nameoffiles:
-            df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
-            xlsx_file = xlsform(df)
-            namecheck = file.split('_')
-            st1 = "ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ "
-            st2 = ""
-            st3 = ""
-            if len(namecheck) < 3:
-                if namecheck[1] == 'AIG.CSV':
-                    st2 = "ΑΙΓΑΙΟ"
-                elif namecheck[1] == 'HER.CSV':
-                    st2 = "ΗΡΑΚΛΕΙΟ"
-                elif namecheck[1] == 'RHO.CSV':
-                    st2 = "ΡΟΔΟΣ"
-                elif namecheck[1] == 'RET.CSV':
-                    st2 = "ΡΕΘΥΜΝΟ"
-                elif namecheck[1] == 'LAS.CSV':
-                    st2 = "ΛΑΣΙΘΙ"
-                else:
-                    print("WRONG FILE !1?")
+def finalExcelName():
+    saveto = filedialog.askdirectory()
+    #if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
+    for file in nameoffiles:
+        df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
+        xlsx_file = xlsform(df)
+        namecheck = file.split('_')
+        st1 = "ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ "
+        st2 = ""
+        st3 = ""
+        if len(namecheck) < 3:
+            if namecheck[1] == 'AIG.CSV':
+                st2 = "ΑΙΓΑΙΟ"
+            elif namecheck[1] == 'HER.CSV':
+                st2 = "ΗΡΑΚΛΕΙΟ"
+            elif namecheck[1] == 'RHO.CSV':
+                st2 = "ΡΟΔΟΣ"
+            elif namecheck[1] == 'RET.CSV':
+                st2 = "ΡΕΘΥΜΝΟ"
+            elif namecheck[1] == 'LAS.CSV':
+                st2 = "ΛΑΣΙΘΙ"
             else:
-                st3 = " 2"
-                if namecheck[1] == 'AIG':
-                    st2 = "ΑΙΓΑΙΟ"
-                elif namecheck[1] == 'HER':
-                    st2 = "ΗΡΑΚΛΕΙΟ"
-                elif namecheck[1] == 'RHO':
-                    st2 = "ΡΟΔΟΣ"
-                elif namecheck[1] == 'RET':
-                    st2 = "ΡΕΘΥΜΝΟ"
-                elif namecheck[1] == 'LAS':
-                    st2 = "ΛΑΣΙΘΙ"
-                else:
-                    print("WRONG FILE !2?")
+                print("WRONG FILE !1?")
+        else:
+            st3 = " 2"
+            if namecheck[1] == 'AIG':
+                st2 = "ΑΙΓΑΙΟ"
+            elif namecheck[1] == 'HER':
+                st2 = "ΗΡΑΚΛΕΙΟ"
+            elif namecheck[1] == 'RHO':
+                st2 = "ΡΟΔΟΣ"
+            elif namecheck[1] == 'RET':
+                st2 = "ΡΕΘΥΜΝΟ"
+            elif namecheck[1] == 'LAS':
+                st2 = "ΛΑΣΙΘΙ"
+            else:
+                print("WRONG FILE !2?")
 
-            out_path = 'C:\\Users\\StelD\\Documents\\Excel files\\' + st1 + st2 + st3 + '.xlsx'
-            xlsx_file.to_excel(out_path, index=False)
+        out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
+        xlsx_file.to_excel(out_path, index=False)
+
 
 
 
