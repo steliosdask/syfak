@@ -65,8 +65,24 @@ def finalExcelName():
                 st2 = "ΛΑΣΙΘΙ"
             else:
                 print("WRONG FILE !2?")
-        out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
-        xlsx_file.to_excel(out_path, index=False)
+       
+                st3 = " 2"
+                if namecheck[1] == 'AIG':
+                    st2 = "ΑΙΓΑΙΟ"
+                elif namecheck[1] == 'HER':
+                    st2 = "ΗΡΑΚΛΕΙΟ"
+                elif namecheck[1] == 'RHO':
+                    st2 = "ΡΟΔΟΣ"
+                elif namecheck[1] == 'RET':
+                    st2 = "ΡΕΘΥΜΝΟ"
+                elif namecheck[1] == 'LAS':
+                    st2 = "ΛΑΣΙΘΙ"
+                else:
+                    print("WRONG FILE !2?")
+
+            out_path = 'C:\\Users\\StelD\\Documents\\Excel files\\' + st1 + st2 + st3 + '.xlsx'
+            xlsx_file.to_excel(out_path, index=False)
+
 
 
 
