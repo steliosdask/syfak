@@ -33,6 +33,7 @@ nameoffiles = listOfFiles()
 
 #GIVES APPROPRIATE NAME ON NEW FILES
 def finalExcelName(ci):
+    saveto = filedialog.askdirectory()
     if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
         for file in nameoffiles:
             df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
@@ -69,7 +70,7 @@ def finalExcelName(ci):
                 else:
                     print("WRONG FILE !2?")
 
-            out_path = 'C:\\Users\\StelD\\Documents\\GitHub\\syfak\\files\\' + st1 + st2 + st3 + '.xlsx'
+            out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
             xlsx_file.to_excel(out_path, index=False)
 
 
