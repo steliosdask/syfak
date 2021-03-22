@@ -71,7 +71,8 @@ def finalExcelName(ci):
             excel = win32.gencache.EnsureDispatch('Excel.Application')
             wb = excel.Workbooks.Open(out_path)
             ws = wb.Worksheets("Sheet1")
-            ws.Columns.AutoFit()
+            ws.Range('A:F').ColumnWidth = 22
+            ws.Columns(2).ColumnWidth = 50
             wb.Save()
             excel.Application.Quit()
 
