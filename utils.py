@@ -3,6 +3,7 @@ import warnings
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
+import win32com.client as win32
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -13,63 +14,66 @@ root.withdraw()
 path = filedialog.askdirectory()
 
 
-
 #CREATES LIST WITH FILES
 def listOfFiles():
     files = glob.glob(path + "\*.csv")
-
     files_new = []
     for file in files:
         files_new.append(file.replace(path + "\\", ''))
     return files_new
 
 
-
 nameoffiles = listOfFiles()
 
 
-#GIVES APPROPRIATE NAME ON NEW FILES
-def finalExcelName():
+#GIVES APPROPRIATE NAME ON NEW FILE
+def finalExcelName(ci):
     saveto = filedialog.askdirectory()
-    #if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
-    for file in nameoffiles:
-        df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
-        xlsx_file = xlsform(df)
-        namecheck = file.split('_')
-        st1 = "ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ "
-        st2 = ""
-        st3 = ""
-        if len(namecheck) < 3:
-            if namecheck[1] == 'AIG.CSV':
-                st2 = "ΑΙΓΑΙΟ"
-            elif namecheck[1] == 'HER.CSV':
-                st2 = "ΗΡΑΚΛΕΙΟ"
-            elif namecheck[1] == 'RHO.CSV':
-                st2 = "ΡΟΔΟΣ"
-            elif namecheck[1] == 'RET.CSV':
-                st2 = "ΡΕΘΥΜΝΟ"
-            elif namecheck[1] == 'LAS.CSV':
-                st2 = "ΛΑΣΙΘΙ"
+    if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
+        for file in nameoffiles:
+            df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
+            xlsx_file = xlsform(df)
+            namecheck = file.split('_')
+            st1 = "ΤΖΙΡΟΙ ΓΙΑ ΠΙΣΤΩΤΙΚΑ "
+            st2 = ""
+            st3 = ""
+            if len(namecheck) < 3:
+                if namecheck[1] == 'AIG.CSV':
+                    st2 = "ΑΙΓΑΙΟ"
+                elif namecheck[1] == 'HER.CSV':
+                    st2 = "ΗΡΑΚΛΕΙΟ"
+                elif namecheck[1] == 'RHO.CSV':
+                    st2 = "ΡΟΔΟΣ"
+                elif namecheck[1] == 'RET.CSV':
+                    st2 = "ΡΕΘΥΜΝΟ"
+                elif namecheck[1] == 'LAS.CSV':
+                    st2 = "ΛΑΣΙΘΙ"
+                else:
+                    print("WRONG FILE !1?")
             else:
-                print("WRONG FILE !1?")
-        else:
-            st3 = " 2"
-            if namecheck[1] == 'AIG':
-                st2 = "ΑΙΓΑΙΟ"
-            elif namecheck[1] == 'HER':
-                st2 = "ΗΡΑΚΛΕΙΟ"
-            elif namecheck[1] == 'RHO':
-                st2 = "ΡΟΔΟΣ"
-            elif namecheck[1] == 'RET':
-                st2 = "ΡΕΘΥΜΝΟ"
-            elif namecheck[1] == 'LAS':
-                st2 = "ΛΑΣΙΘΙ"
-            else:
-                print("WRONG FILE !2?")
+                st3 = " 2"
+                if namecheck[1] == 'AIG':
+                    st2 = "ΑΙΓΑΙΟ"
+                elif namecheck[1] == 'HER':
+                    st2 = "ΗΡΑΚΛΕΙΟ"
+                elif namecheck[1] == 'RHO':
+                    st2 = "ΡΟΔΟΣ"
+                elif namecheck[1] == 'RET':
+                    st2 = "ΡΕΘΥΜΝΟ"
+                elif namecheck[1] == 'LAS':
+                    st2 = "ΛΑΣΙΘΙ"
+                else:
+                    print("WRONG FILE !2?")
 
-        out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
-        xlsx_file.to_excel(out_path, index=False)
+            out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
+            xlsx_file.to_excel(out_path, index=False)
 
+            excel = win32.gencache.EnsureDispatch('Excel.Application')
+            wb = excel.Workbooks.Open(out_path)
+            ws = wb.Worksheets("Sheet1")
+            ws.Columns.AutoFit()
+            wb.Save()
+            excel.Application.Quit()
 
 
 
@@ -90,7 +94,12 @@ def xlsform(cf):
     for j in titlesvalues:
         cf[j] = cf[j].str.replace('[=,"]', '')
 
-    cf['ΣΥΝΟΛΟ'] = cf.iloc[:, 2:5].sum(axis=1)
+    cf['     ΣΥΝΟΛΟ     '] = cf.iloc[:, 2:5].sum(axis=1)
+
+    cf.loc[cf['ΕΠΩΝΥΜΙΑ'].str.contains('\d', regex=True), ['ΚΩΔ. ΠΕΛΑΤΗ', 'ΕΠΩΝΥΜΙΑ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ','     ΣΥΝΟΛΟ     ']] = ['ΚΩΔ. ΠΕΛΑΤΗ', 'ΕΠΩΝΥΜΙΑ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ', '     ΣΥΝΟΛΟ     ']  # !!!
+
+    cf = cf.style.set_properties(subset=['ΚΩΔ. ΠΕΛΑΤΗ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ', '     ΣΥΝΟΛΟ     '], **{'text-align': 'center'})  # CENTER ALIGNMENT ON SPECIFIC COLUNMS
+
     return cf
 
 
