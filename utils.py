@@ -49,7 +49,7 @@ def finalExcelName():
             elif namecheck[1] == 'LAS.CSV':
                 st2 = "ΛΑΣΙΘΙ"
             else:
-                print("WRONG FILE !1?")
+                print("WRONG FILE !!?")
         else:
             st3 = " 2"
             if namecheck[1] == 'AIG':
@@ -63,7 +63,7 @@ def finalExcelName():
             elif namecheck[1] == 'LAS':
                 st2 = "ΛΑΣΙΘΙ"
             else:
-                print("WRONG FILE !2?")
+                print("WRONG FILE !!?")
 
         out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
         xlsx_file.to_excel(out_path, index=False)
