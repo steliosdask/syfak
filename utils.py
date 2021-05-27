@@ -1,10 +1,18 @@
 import glob
 import warnings
 import pandas as pd
-from main import path
+import tkinter as tk
+from tkinter import filedialog
 import win32com.client as win32
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
+
+
+#USER CHOOSE FOLDER WITH CSV FILES
+root = tk.Tk()
+root.withdraw()
+path = filedialog.askdirectory()
+
 
 #CREATES LIST WITH FILES
 def listOfFiles():
@@ -14,10 +22,13 @@ def listOfFiles():
         files_new.append(file.replace(path + "\\", ''))
     return files_new
 
+
 nameoffiles = listOfFiles()
 
+
 #GIVES APPROPRIATE NAME ON NEW FILE
-def finalExcelName(saveto):
+def finalExcelName():
+    saveto = filedialog.askdirectory()
     #if ci == 'Y' or ci == 'Yes' or ci == 'y' or ci == 'yes':
     for file in nameoffiles:
         df = pd.read_csv(path + '\\' + file, delimiter=';', encoding='iso8859_7')
@@ -37,6 +48,8 @@ def finalExcelName(saveto):
                 st2 = "ΡΕΘΥΜΝΟ"
             elif namecheck[1] == 'LAS.CSV':
                 st2 = "ΛΑΣΙΘΙ"
+            else:
+                print("WRONG FILE !!?")
         else:
             st3 = " 2"
             if namecheck[1] == 'AIG':
@@ -49,6 +62,8 @@ def finalExcelName(saveto):
                 st2 = "ΡΕΘΥΜΝΟ"
             elif namecheck[1] == 'LAS':
                 st2 = "ΛΑΣΙΘΙ"
+            else:
+                print("WRONG FILE !!?")
 
         out_path = saveto + '\\' + st1 + st2 + st3 + '.xlsx'
         xlsx_file.to_excel(out_path, index=False)
@@ -60,6 +75,9 @@ def finalExcelName(saveto):
         ws.Columns(2).ColumnWidth = 50
         wb.Save()
         excel.Application.Quit()
+
+
+
 
 
 #FORM OF THE NEW FILE
@@ -79,11 +97,11 @@ def xlsform(cf):
 
     cf['ΣΥΝΟΛΟ'] = cf.iloc[:, 2:5].sum(axis=1)
 
-    #TITLES TO MH MELH
     cf.loc[cf['ΕΠΩΝΥΜΙΑ'].str.contains('\d', regex=True), ['ΚΩΔ. ΠΕΛΑΤΗ', 'ΕΠΩΝΥΜΙΑ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ','ΣΥΝΟΛΟ']] = ['ΚΩΔ. ΠΕΛΑΤΗ', 'ΕΠΩΝΥΜΙΑ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ', 'ΣΥΝΟΛΟ']  # !!!
-    #CENTER ALIGNMENT ON SPECIFIC COLUNMS
-    cf = cf.style.set_properties(subset=['ΚΩΔ. ΠΕΛΑΤΗ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ', 'ΣΥΝΟΛΟ'], **{'text-align': 'center'})  
+
+    cf = cf.style.set_properties(subset=['ΚΩΔ. ΠΕΛΑΤΗ', 'ΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΠΑΡΑΦΑΡΜΑΚΑ ΤΖΙΡΟΣ', 'ΓΑΛΑΤΑ ΤΖΙΡΟΣ', 'ΣΥΝΟΛΟ'], **{'text-align': 'center'})  # CENTER ALIGNMENT ON SPECIFIC COLUNMS
 
     return cf
 
 
+#path = r'C:\Users\StelD\Documents\GitHub\syfak\files'

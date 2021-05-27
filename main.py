@@ -1,4 +1,4 @@
-from utils import *
+from utils import finalExcelName
 import tkinter as tk
 from tkinter import filedialog
 
@@ -6,7 +6,7 @@ from tkinter import filedialog
 #USER CHOOSE DIRECTORY WITH CSV FILES
 root = tk.Tk()
 root.withdraw()
-path = filedialog.askdirectory()
+patheoffiles = filedialog.askdirectory()
 
 #SAVE TO DIRECTORY
 saveto = filedialog.askdirectory()
